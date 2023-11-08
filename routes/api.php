@@ -23,20 +23,38 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
-Route::group(['prefix'=>'users','controller'=>UserController::class],function(){
-Route::get('/','index');
-Route::get('/{user}','show');
-Route::post('/','store');
-Route::put('/{user}','update');
-Route::delete('/{user}','destroy');
-});
-Route::group(['prefix'=>'authors','controller'=>AuthorController::class],function(){
-Route::get('/','index');
-Route::get('/{author}','show');
-Route::post('/','store');
-Route::put('/{author}','update');
-Route::delete('/{author}','destroy');
-});
+
+
 Route::post('/login',[AuthUserAPIController::class,'login']);
+Route::post('/register',[UserController::class,'store']);//Registro de user
+
+
+
+//Asi se denominan las rutas prtegidas
+Route::group(['middleware'=>['auth:sanctum']], function () {
+
+    Route::post('/logout',[AuthUserAPIController::class,'logout']);
+    Route::get('/profile',[AuthUserAPIController::class,'profile']);
+
+    Route::group(['prefix'=>'users','controller'=>UserController::class],function(){
+        Route::get('/','index');
+        Route::get('/{user}','show');
+        Route::post('/','store');
+        Route::put('/{user}','update');
+        Route::delete('/{user}','destroy');
+        });
+        
+        
+        Route::group(['prefix'=>'authors','controller'=>AuthorController::class],function(){
+        Route::get('/','index');
+        Route::get('/{author}','show');
+        Route::post('/','store');
+        Route::put('/{author}','update');
+        Route::delete('/{author}','destroy');
+        });
+        
+
+});
+
 
 
