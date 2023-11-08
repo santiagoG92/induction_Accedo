@@ -1,9 +1,11 @@
 <?php
 
-use App\Http\Controllers\UserController;
-
 use Illuminate\Http\Request;
+
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AuthorController;
+use App\Http\Controllers\AuthUserAPIController;
 
 /*
 |--------------------------------------------------------------------------
@@ -28,3 +30,13 @@ Route::post('/','store');
 Route::put('/{user}','update');
 Route::delete('/{user}','destroy');
 });
+Route::group(['prefix'=>'authors','controller'=>AuthorController::class],function(){
+Route::get('/','index');
+Route::get('/{author}','show');
+Route::post('/','store');
+Route::put('/{author}','update');
+Route::delete('/{author}','destroy');
+});
+Route::post('/login',[AuthUserAPIController::class,'login']);
+
+

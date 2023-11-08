@@ -54,7 +54,7 @@ class User extends Authenticatable
     public function setPasswordAttributte($value)
     {   
 
-    $this->attributes['password']=bcrypt($value) ;
+        $this->attributes['password'] = bcrypt($value);
     }
 
     public function setRememberTokenAttributte($value)
