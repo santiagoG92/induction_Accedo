@@ -2,8 +2,6 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use App\Models\Lend;
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
 use Illuminate\Notifications\Notifiable;
@@ -13,20 +11,16 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable,SoftDeletes;
+	use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
-    protected $fillable = [
-        'number_id',
-        'name',
-        'last_name',
-        'email',
-        'password',
-    ];
+	protected $fillable = [
+		'number_id',
+		'name',
+		'last_name',
+		'email',
+		'password',
+	];
+
 
     protected $appends=['full_name'];
 
@@ -51,17 +45,18 @@ class User extends Authenticatable
     }
 
     //Mutadores
-    public function setPasswordAttributte($value)
+    public function setPasswordAttribute($value)
     {   
 
         $this->attributes['password'] = bcrypt($value);
     }
 
-    public function setRememberTokenAttributte($value)
+    public function setRememberTokenAttribute($value)
     {
 
     $this->attributes['remember_token']= Str::random(30) ;
     }
+    
 
 
 

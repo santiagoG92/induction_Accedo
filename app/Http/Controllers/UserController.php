@@ -6,22 +6,23 @@ use App\Models\User;
 use Illuminate\Http\Request;
 
 use App\Http\Requests\User\UserRequest;
+use App\Http\Controllers\UserController;
 
 class UserController extends Controller
 {
     public function index(Request $request)
     {
         $users=User::get();
-        if(!$request->ajax())
-        return view();
+        if (!$request->ajax()) return view('users.index', compact('users'));
 
-        return response ()->json(['status'=>$users],201);
+        return response ()->json(['users'=>$users],200);
 
     }
+   
 
     public function create()
     {
-        //
+       return view('users.create');
     }
 
     public function store(UserRequest $request)
@@ -29,7 +30,7 @@ class UserController extends Controller
       $user = new User ($request->all());
       $user->save();
       if(!$request->ajax())
-        return back()->with('succes','User created');
+        return back()->with('success','User created');
 
         return response()->json(['status'=>'User created','user'=>$user],201);
 
@@ -45,9 +46,9 @@ class UserController extends Controller
         return response ()->json(['user'=>$user],200);
     }
 
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit' , compact('user'));
     }
 
 
@@ -55,7 +56,7 @@ class UserController extends Controller
     {
       $user->update($request->all());
       if(!$request->ajax())
-        return back()->with('succes','User Update');
+        return back()->with('success','User Update');
 
         return response()->json([],204);
     }
@@ -65,7 +66,7 @@ class UserController extends Controller
     {
         $user->delete();
         if(!$request->ajax())
-        return back()->with('succes','User Delete');
+        return back()->with('success','User Delete');
 
         return response()->json([],204);
     }

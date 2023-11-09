@@ -8,11 +8,12 @@
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    <title>{{ $title ?? 'Biblioteca' }}</title>
+    {{-- tittle --}}
+    <title> {{env('APP_NAME')}} | {{ $title ?? 'Libros' }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="//fonts.gstatic.com">
-    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet">
+    {{-- <link rel="dns-prefetch" href="//fonts.gstatic.com">
+    <link href="https://fonts.bunny.net/css?family=Nunito" rel="stylesheet"> --}}
 
     <!-- Scripts -->
     @vite(['resources/sass/app.scss', 'resources/js/app.js'])
@@ -27,7 +28,7 @@
     {{-- Content --}}
     <main id="app">
         <div class="container mt-4">
-            {{-- <x-alerts /> --}}
+            <x-alerts />
         </div>
 
         {{ $slot }}

@@ -3,7 +3,7 @@
 {{-- Menu --}}
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
-        <a class="navbar-brand" href="{{ url('/') }}">Biblioteca Central</a>
+        <a class="navbar-brand" href="{{ url('/') }}">{{env('APP_NAME')}} </a>
 
         {{-- Haburguesa --}}
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
@@ -23,7 +23,7 @@
                 @guest
                     @if (Route::has('login'))
                         <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Login</a>
+                            <a class="nav-link" href="{{ route('login') }}">Inicio de Sesion</a>
                         </li>
                     @endif
 
@@ -40,21 +40,22 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            @role('admin')
+                            {{-- @role('admin') --}}
                                 {{-- Users --}}
-                                <a class="dropdown-item" href="{{ route('users') }}">Usuarios</a>
+                                {{-- <a class="dropdown-item" href="{{ route('users') }}">Usuarios</a> --}}
 
                                 {{-- Books --}}
-                                <a class="dropdown-item" href="{{ route('books') }}">Libros</a>
-                            @endrole
+                                {{-- <a class="dropdown-item" href="{{ route('books') }}">Libros</a> --}}
+                            {{-- @endrole --}}
 
                             {{-- Logout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form').submit();">Logout
+                                onclick="event.preventDefault(); document.getElementById('logout-form')
+                                .submit();">Cerrar Sesion
                             </a>
 
                             {{-- Category Products --}}
-                            <a class="dropdown-item" href="/category-products/index">Category Products</a>
+                            {{-- <a class="dropdown-item" href="/category-products/index">Category Products</a> --}}
 
 
                             <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
