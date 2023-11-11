@@ -6,6 +6,7 @@ namespace Database\Seeders;
 use App\Models\User;
 use App\Models\Author;
 use Illuminate\Database\Seeder;
+use Database\Seeders\RoleSeeder;
 use Database\Seeders\UserSeeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,9 +20,10 @@ class DatabaseSeeder extends Seeder
     public function run()
     {
         $this->call
-        ([UserSeeder::class,
+        ([RoleSeeder::class,
+        UserSeeder::class,
         CategorySeeder::class
-
+        
 
     ]);
         User::factory(10)->create();

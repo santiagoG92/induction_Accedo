@@ -16,7 +16,7 @@ class UserSeeder extends Seeder
      */
     public function run()
     {
-        User::create([
+        $user=new User([
             'number_id' => '1110288578',
             'name' => 'Santiago',
             'last_name' => 'Garcia',
@@ -26,5 +26,7 @@ class UserSeeder extends Seeder
             'remember_token' => Str::random(10),
 
         ]);
+        $user->save();
+        $user->assignRole('admin');
     }
 }

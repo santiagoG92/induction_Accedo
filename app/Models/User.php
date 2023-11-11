@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Support\Str;
 use Laravel\Sanctum\HasApiTokens;
+use Spatie\Permission\Traits\HasRoles;
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
@@ -11,7 +12,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-	use HasApiTokens, HasFactory, Notifiable, SoftDeletes;
+	use HasRoles,HasApiTokens, HasFactory, Notifiable, SoftDeletes;
 
 	protected $fillable = [
 		'number_id',
@@ -24,8 +25,8 @@ class User extends Authenticatable
 
     protected $appends=['full_name'];
 
-   
-    
+
+
     protected $hidden = [
         'password',
         'remember_token',
@@ -36,7 +37,7 @@ class User extends Authenticatable
         'created_at'=>'datetime:Y-m-d',
         'updated_at'=>'datetime:Y-m-d'
     ];
-   
+
 
     public function getFullNameAttribute()
     {
@@ -46,7 +47,7 @@ class User extends Authenticatable
 
     //Mutadores
     public function setPasswordAttribute($value)
-    {   
+    {
 
         $this->attributes['password'] = bcrypt($value);
     }
@@ -56,14 +57,14 @@ class User extends Authenticatable
 
     $this->attributes['remember_token']= Str::random(30) ;
     }
-    
+
 
 
 
 
 
     //Relaciones
-   
+
     public function customerLends()
     {
         return $this->hasMany(Lend::class, 'customer_user_id', 'id');

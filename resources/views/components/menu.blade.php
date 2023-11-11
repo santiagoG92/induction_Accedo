@@ -40,13 +40,16 @@
                         </a>
 
                         <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                            {{-- @role('admin') --}}
+                           
+                           {{-- se crea contenido del menu y se le dan los roles de acceso
+                             --}}
+                            @role('admin')
                                 {{-- Users --}}
-                                {{-- <a class="dropdown-item" href="{{ route('users') }}">Usuarios</a> --}}
+                                <a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a>
 
                                 {{-- Books --}}
                                 {{-- <a class="dropdown-item" href="{{ route('books') }}">Libros</a> --}}
-                            {{-- @endrole --}}
+                            @endrole
 
                             {{-- Logout --}}
                             <a class="dropdown-item" href="{{ route('logout') }}"
