@@ -1,5 +1,3 @@
-
-
 {{-- Menu --}}
 <nav class="navbar navbar-expand-md navbar-light bg-white shadow-sm">
     <div class="container">
@@ -21,52 +19,59 @@
             <ul class="navbar-nav ms-auto">
                 <!-- Authentication Links -->
                 @guest
-                    @if (Route::has('login'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('login') }}">Inicio de Sesion</a>
-                        </li>
-                    @endif
+                @if (Route::has('login'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('login') }}">Inicio de Sesion</a>
+                </li>
+                @endif
 
-                    @if (Route::has('register'))
-                        <li class="nav-item">
-                            <a class="nav-link" href="{{ route('register') }}">Registro</a>
-                        </li>
-                    @endif
+                @if (Route::has('register'))
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('register') }}">Registro</a>
+                </li>
+                @endif
                 @else
-                    <li class="nav-item dropdown">
-                        <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
-                            data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                            {{ Auth::user()->full_name }}
+                <li class="nav-item dropdown">
+                    <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button"
+                        data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
+                        {{ Auth::user()->full_name }}
+                    </a>
+
+                    <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+
+                        {{-- se crea contenido del menu y se le dan los roles de acceso
+                        --}}
+                        @role('admin')
+                        {{-- Users --}}
+                        <a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a>
+
+                        {{-- Books --}}
+                        {{-- <a class="dropdown-item" href="{{ route('books') }}">Libros</a> --}}
+                        @endrole
+                        @role('admin|librarian')
+
+
+                        {{-- Books --}}
+                        <a class="dropdown-item" href="{{ route('books.index') }}">Libros</a>
+                        @endrole
+
+                        @can('categories.index')
+
+                        {{-- Category Products --}}
+                        <a class="dropdown-item" href="{{ route('categories.index') }}">Categorias</a>
+
+                        @endcan
+                        {{-- Logout --}}
+                        <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('logout-form')
+                                .submit();">Cerrar Sesion
                         </a>
 
-                        <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                           
-                           {{-- se crea contenido del menu y se le dan los roles de acceso
-                             --}}
-                            @role('admin')
-                                {{-- Users --}}
-                                <a class="dropdown-item" href="{{ route('users.index') }}">Usuarios</a>
+                        <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
+                            @csrf
+                        </form>
+                    </div>
 
-                                {{-- Books --}}
-                                {{-- <a class="dropdown-item" href="{{ route('books') }}">Libros</a> --}}
-                            @endrole
-
-                            {{-- Logout --}}
-                            <a class="dropdown-item" href="{{ route('logout') }}"
-                                onclick="event.preventDefault(); document.getElementById('logout-form')
-                                .submit();">Cerrar Sesion
-                            </a>
-
-                            {{-- Category Products --}}
-                            {{-- <a class="dropdown-item" href="/category-products/index">Category Products</a> --}}
-
-
-                            <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
-                                @csrf
-                            </form>
-                        </div>
-
-                    </li>
+                </li>
                 @endguest
             </ul>
         </div>
