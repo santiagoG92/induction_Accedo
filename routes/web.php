@@ -48,6 +48,7 @@ Route::group(['middleware' =>['auth']],function(){
     Route::group(['prefix' => 'categories', 'controller'=> CategoryController::class],function(){
         // prefix' => 'categories', 'middleware' => ['role:admin']
         Route::get('/',  'index')->name('categories.index')->middleware('can:categories.index');
+        Route::get('/get-all',  'index')->name('categories.get-all')->middleware('can:categories.get-all');
         Route::get('/create',  'create')->name('categories.create')->middleware('can:categories.create');
         Route::post('/',  'store')->name('categories.store')->middleware('can:categories.store');
         Route::get('/{user}/edit',  'edit')->name('categories.edit')->middleware('can:categories.edit');

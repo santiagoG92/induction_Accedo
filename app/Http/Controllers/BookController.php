@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Book;
+use App\Models\Author;
 use Illuminate\Http\Request;
 
 class BookController extends Controller
@@ -13,9 +14,9 @@ class BookController extends Controller
         return view('index',compact('books'));
     }
      public function index()
-    {
+    {   $authors=Author::get();
         $books=Book::with('author','category')->get();
-        return view('books.index',compact('books'));
+        return view('books.index',compact('books','authors'));
     }
 
     public function create()
@@ -25,7 +26,11 @@ class BookController extends Controller
 
     public function store(Request $request)
     {
-        //
+        $book = new Book($request->all());
+		$book->save();
+		// $user->assignRole($request->role);
+		// if (!$request->ajax()) return back()->with('success', 'User created');
+		return response()->json([], 201);
     }
 
     public function show($id)
