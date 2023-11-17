@@ -21,11 +21,9 @@ class CategoryController extends Controller
 
     public function store(Request $request)
     {
-        $category = new Category($request->all());
-		$category->save();
-		// $user->assignRole($request->role);
-		// if (!$request->ajax()) return back()->with('success', 'User created');
-		return response()->json([], 201);
+        $categories = Category::get();
+		if (!$request->ajax()) return view();
+		return response()->json(['categories' => $categories], 200);
     }
 
     public function show($id)
