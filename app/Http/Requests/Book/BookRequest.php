@@ -7,6 +7,16 @@ use Illuminate\Foundation\Http\FormRequest;
 class BookRequest extends FormRequest
 {
 
+    protected $rules= [
+        'title'=>['required','string'],
+        'description'=>['required','string'],
+        'stock'=>['required','numeric'],
+        'author_id'=>['required','exists:authors,id'],
+        'category_id'=>['required','exists:categories,id'],
+        'file'=>['required','image'],
+    ];
+
+
     public function authorize()
     {
         return true;
@@ -15,13 +25,7 @@ class BookRequest extends FormRequest
 
     public function rules()
     {
-        return [
-            'title'=>['required','string'],
-            'description'=>['required','string'],
-            'stock'=>['required','numeric'],
-            'author_id'=>['required','exists:authors,id'],
-            'category_id'=>['required','exists:categories,id'],
-        ];
+        return $this->rules;
 
     }
 
@@ -38,7 +42,11 @@ class BookRequest extends FormRequest
             'author_id.required'=>'El autor es requerido',
             'author_id.exists'=>'El autor no existe',
             'category_id.required'=>'La categoria es requerida',
-            'category_id.exists'=>'La categoria no existe'
+            'category_id.exists'=>'La categoria no existe',
+
+
+            'file.required'=>'La imagen es requerida',
+            'file.image'=>'el archivo debe de ser una imagen valida',
         ];
     }
 

@@ -3,6 +3,7 @@
 namespace Database\Factories;
 
 use App\Models\Book;
+use App\Models\File;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -31,5 +32,15 @@ return $this->state([
             'stock' => $this ->faker->randomDigit(),
             'description' => $this ->faker->paragraph(),
         ];
+    }
+    public function configure()
+    {
+        return $this->afterCreating(function(Book $book){
+           $file=new File(['route' => '/storage/images/books/default.png']);
+           $book->file()->save($file);
+        });
+
+
+
     }
 }

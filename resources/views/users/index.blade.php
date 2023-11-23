@@ -6,9 +6,9 @@
     <div class="card-header d-flex justify-content-end">
         <a href="{{route('users.create')}}"class="btn btn-primary">Nuevo usuario </a>
     </div>
- <div class="card-body">  
-    <div class="table-responsive my-4 mx-2"> 
-<table class="table table-bordered">
+ <div class="card-body">
+    <div class="table-responsive my-4 mx-2">
+<table class="table table-bordered" id="user_table">
 
 
         <thead>
@@ -23,7 +23,7 @@
         </thead>
         <tbody>
             @foreach ($users as $user)
-    
+
 
 
           <tr>
@@ -45,20 +45,51 @@
             <a href="{{route('users.edit',['user'=>$user->id])}}"
                 class="btn btn-warning btn-sm "><i class="far fa-edit"></i></a>
 
-                <form action="{{route('users.destroy',['user'=>$user->id])}} "method="post">
+                <button class="btn btn-danger btn-sm ms-2"
+                onclick="deleteForm({{$user->id}})">
+                <i class="fas fa-trash"></i>
+                </button>
+
+
+                <form id="delete_form_{{$user->id}}" action="{{route('users.destroy'
+                ,['user'=>$user->id])}} "method="post">
                     @csrf
                     @method('DELETE')
-                    <button class="ms-2 btn btn-danger btn-sm"><i class="fas fa-trash"></i></button>
                 </form>
             </div>
 
             </th>
-           
+
           </tr>
-          @endforeach         
+          @endforeach
         </tbody>
       </table>
-      </div> 
-    </div>  
+      </div>
+    </div>
     </section>
-</x-app>
+
+    <x-slot:scripts>
+
+      <script>
+          document.addEventListener("DOMContentLoaded",loadDatatable);
+   
+
+           function loadDatatable() {
+           $('#user_table').DataTable()
+          }
+
+          async function deleteForm(user_id){
+            const response = await Swal.fire({
+              icon: 'warning',
+              title:'Esta seguro de eliminar?',
+              showCancelButton:'true',
+            })
+            if(!response.isConfirmed)return
+            document.getElementById(`delete_form_${user_id}`).submit();
+
+
+          }
+
+        </script>
+             </x-slot:scripts>
+    </x-app>

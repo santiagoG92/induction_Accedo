@@ -33,6 +33,7 @@
 
         {{ $slot }}
     </main>
+        {{ $scripts ?? '' }}
 </body>
 
 </html>
